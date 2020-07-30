@@ -44,6 +44,19 @@ class SimpleGraph:
             self.add((sub, pred, obj))
         f.close()
 
+    def query(self, clauses):
+        bindings = None
+        for clause in clauses:
+            bpos = {}
+            qc = []
+            for pos, x in enumerate(clause):
+                if x.startsWith('?'):
+                    qc.append(None)
+                    bpos[x] = pos
+                else:
+                    qc.append(x) 
+            rows = list(self.triples((qc[0], qc[1], qc[2]))) 
+
     def save(self, filename):
         f = open(filename, "wb")
         writer = csv.writer(f)
