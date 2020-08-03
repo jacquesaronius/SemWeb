@@ -134,3 +134,13 @@ class SimpleGraph:
             if obj is None: return retObj
             break
         return None
+
+    def applyinference(self, rule):
+        queries = rule.getqueries()
+        bindings = []
+        for query in queries:
+            bindings += self.query(query)
+        for b in bindings:
+            new_triples = rule.maketriples(b)
+            for triple in new_triples:
+                self.add(triple)
